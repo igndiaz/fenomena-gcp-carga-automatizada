@@ -5,7 +5,7 @@ Este repositorio contiene todo lo necesarios para configurar la carga automátic
 ## Solución y Componentes
 El diseño de esta solución utiliza componentes asociados a la nube GCP, dada la necesidad de cargar esta información en BigQuery y visualizar los resultados por medio de Data Studio. A continuación un diagrama de la solución.
 
-![Arquitectura Solución Automatización](images\Fenomena_Arquitectura.jpg)
+![Arquitectura Solución Automatización](images/Fenomena_Arquitectura.jpg)
 
 Las componentes que comprenden la solución son las siguientes:
 
@@ -25,7 +25,7 @@ Por otro lado, se generó un modelo de datos que permita responder a una carga d
 
 El siguiente diagrama refleja el modelo de datos establecido para lograr este objetivo.
 
-[![Modelo de datos solución](images\Fenomena_Modelo_Datos.jpg)](https://viewer.diagrams.net/?page-id=Vxb6hPsQ-BPTseJJH3xb&highlight=0000ff&edit=_blank&layers=1&nav=1&page-id=Vxb6hPsQ-BPTseJJH3xb#G1nt1bHHiCCEFjgPvGNnVYK4f8lPGxfg85)
+[![Modelo de datos solución](images/Fenomena_Modelo_Datos.jpg)](https://viewer.diagrams.net/?page-id=Vxb6hPsQ-BPTseJJH3xb&highlight=0000ff&edit=_blank&layers=1&nav=1&page-id=Vxb6hPsQ-BPTseJJH3xb#G1nt1bHHiCCEFjgPvGNnVYK4f8lPGxfg85)
 
 Dentro de este modelo, las tablas marcadas en <span style="color:green">verde</span> son cargadas con información mediante el proceso automatizado, en cambio las tablas en <span style="color:purple">morado</span> deben ser cargadas mediante un proceso manual (*son tablas con información no extraíble de los archivos de Plan de Medios o Leads*). Finalmente, tenemos las tablas en <span style="color:red">rojo</span> que corresponden a tablas que debieran crearse pero aún no se tiene clara su estructura o la información a cargar en ellas (*son tablas poco críticas para el proceso actual*)
 
