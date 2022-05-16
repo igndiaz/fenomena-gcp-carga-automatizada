@@ -1,0 +1,10 @@
+{
+"Industria":"Automotriz",
+"PlanMedios": {"CAMPAÑA":"NombrePlan","AÑO":"AnoPlan","MES / PERIODO":"MesPlan","IMPRESIONES":"MetaPlanImpresiones","CLICS":"MetaPlanClics","CPC":"MetaPlanCPC","CTR":"MetaPlanCTR","CPM":"MetaPlanCPM","FORMULARIOS":"MetaPlanFormularios","CPL":"MetaPlanCPL","VIEWS":"MetaPlanViews","CPV":"MetaPlanCPV","VALOR NETO":"MetaPlanValorNeto"},
+"CampanaMedios": {"CAMPAÑA":"NombrePlan","AÑO":"AnoPlan","MES / PERIODO":"MesPlan","REGION":"RegionCampana","PAIS":"PaisCampana","SUCURSAL":"SucursalCampana","SUBCATEGORIA":"Subcategoria","TARGET":"Target","FOCO":"Foco","SOPORTE":"Soporte","FORMATO":"Formato","UBICACION":"Ubicacion","TIPO DE COMPRA":"TipoCompra","INICIO CAMPAÑA":"InicioCampana","FIN CAMPAÑA":"FinCampana","TAXONOMÍA":"Taxonomia","IMPRESIONES":"MetaImpresiones","CLICS":"MetaClics","CPC":"MetaCPC","CTR":"MetaCTR","CPM":"MetaCPM","FORMULARIOS":"MetaFormularios","CPL":"MetaCPL","VIEWS":"MetaViews","CPV":"MetaCPV","VALOR NETO":"MetaValorNeto"},
+"RegionCampana":{"REGION":"RegionCampana","PAIS":"PaisCampana","SUCURSAL":"SucursalCampana"},
+"Campana":{"IDRegionCampana":"IDRegionCampana","SUBCATEGORIA":"Subcategoria","TARGET":"Target","FOCO":"Foco"},
+"Medios":{"SOPORTE":"Soporte","FORMATO":"Formato","UBICACION":"Ubicacion","TIPO DE COMPRA":"TipoCompra"},
+"CamposStringVacios":{"SUBCATEGORIA":"Subcategoria","TARGET":"Target","FOCO":"Foco","SUCURSAL":"SucursalCampana","UBICACION":"Ubicacion","TIPO DE COMPRA":"TipoCompra"},
+"Reemplazos":{"Ñ":"N","__":"_","LEAD-ADS":"LEADADS","CAMPANA-COVID":"CAMPANACOVID","LINK-ADS":"LINKADS","\\..":"","NUEVA-SUCURSAL-VITACURA":"NUEVASUCURSALVITACURA"}
+}    

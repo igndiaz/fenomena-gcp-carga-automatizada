@@ -1,0 +1,9 @@
+# Function dependencies, for example:
+# package>=version
+google-cloud-storage
+google-cloud-bigquery
+google-cloud-core
+pandas
+openpyxl
+sendgrid
+pandas-gbq

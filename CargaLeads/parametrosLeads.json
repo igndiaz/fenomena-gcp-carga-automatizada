@@ -1,0 +1,27 @@
+{
+    "Industria" : "Automotriz",
+    "BASE":["DepartamentoDistribuidor","Marca","IDDependencia","LeadSource","TemperaturaOportunidad","Correo","Rut","InteractionDetail","UtmCampaign","UtmSource","UtmMedium","UtmContent","UtmTerm","Homologacion","Fecha","Nombre","Apellido","Telefono","UTM"],
+    "DEPENDENCIAS":["IDDependencia","IDCliente","Ciudad","TamanoDependencia","ImportanciaRelativa","Direccion","TipoDependencia"],
+    "REEMPLAZOS":{"Ñ":"N","__":"_","LEAD-ADS":"LEADADS","CAMPANA-COVID":"CAMPANACOVID","LINK-ADS":"LINKADS","\\..":"","NUEVA-SUCURSAL-VITACURA":"NUEVASUCURSALVITACURA"},
+    "BMW":{
+        "BMW MAR 2022":
+        {
+            "DepartamentoDistribuidor": "Departamento del distribuidor",
+            "Marca": "Marca",
+            "IDDependencia": "Nombre del distribuidor",
+            "LeadSource": "Lead Source",
+            "TemperaturaOportunidad": "Temperatura de la oportunidad",
+            "Nombre": "Nombre de la oportunidad",
+            "Correo": "Dirección de Email",
+            "Rut": "Opportunity Identification Number",
+            "InteractionDetail": "InteractionDetail",
+            "UtmCampaign": "utm-campaign",
+            "UtmSource": "utm-source",
+            "UtmMedium": "utm-medium",
+            "UtmContent": "utm-content",
+            "UtmTerm": "utm-term",
+            "Homologacion": "homologacion",
+            "Fecha": "fecha"
+        }
+    }
+}
