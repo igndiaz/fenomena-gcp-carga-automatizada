@@ -188,5 +188,70 @@ Para generar el proceso de carga de Leads asociada a una nueva industria, se deb
 - Cambiar a la industria correspondiente en el campo Industria.
 - Asociar el cliente correspondiente y generar el mapeo de campos asociadas a las nuevas campañas a cargar.
 
-> Para incorporar un __Nuevo Cliente__ lo que debemos hacer es modificar el cliente previo a la definición de las campañas en el archivo de parámetros y asegurarnos que este se encuentre creado en la tabla de Clientes de BigQuery (Según lo establecido en la incorporación del nuevo cliente en la carga de Plan de Medios y utilizando la query asociada en el repositorio SQL) 
+### Nuevo cliente
 
+Para incorporar un __Nuevo Cliente__, para una industria existente o recién creada, lo que debemos hacer es: 
+
+1. Modificar el cliente asociado a la  definición de las campañas en el archivo de parámetros. (Identificado en el siguiente ejemplo como NUEVO_CLIENTE)
+
+```json
+{ (Para ejemplificar omitimos parte del archivo json)...
+    "REEMPLAZOS":{"Ñ":"N","__":"_","LEAD-ADS":"LEADADS","CAMPANA-COVID":"CAMPANACOVID","LINK-ADS":"LINKADS","\\..":"","NUEVA-SUCURSAL-VITACURA":"NUEVASUCURSALVITACURA"},
+    "NUEVO_CLIENTE":{
+        "NUEVO_CLIENTE MAR 2022":
+        {
+            "DepartamentoDistribuidor": "Departamento del distribuidor",
+            "Marca": "Marca",
+            "IDDependencia": "Nombre del distribuidor",
+            "LeadSource": "Lead Source",
+            "TemperaturaOportunidad": "Temperatura de la oportunidad",
+            "Nombre": "Nombre de la oportunidad",
+            "Correo": "Dirección de Email",
+            "Rut": "Opportunity Identification Number",
+            "InteractionDetail": "InteractionDetail",
+            "UtmCampaign": "utm-campaign",
+            "UtmSource": "utm-source",
+            "UtmMedium": "utm-medium",
+            "UtmContent": "utm-content",
+            "UtmTerm": "utm-term",
+            "Homologacion": "homologacion",
+            "Fecha": "fecha"
+        }
+    }
+}
+```
+2. Mapear las campañas y los campos asociados a la información disponible en el archivo de Leads (.xls) del nuevo cliente.
+   
+3. Asegurar que cliente se encuentre creado en la tabla de Clientes de BigQuery. A continuación el SQL de creación básico.
+
+``` SQL
+INSERT INTO `proyecto-mi-dw.datawarehouse.Clientes`(IdCliente,Marca,Pais) 
+VALUES ((select count(1) from `proyecto-mi-dw.datawarehouse.Clientes`)+1,'CLIENTE_NUEVO','Chile');
+```
+4. Validar que el nuevo cliente se encuentre en la tabla ClientesConsumos, la información referente a:
+   - Base y tabla consumos GoogleCampaign
+   - Base y tabla consumos GoogleCampaignBasicStats
+   - Base y tabla consumos FacebookAds
+   - Base y tabla consumos Máximo Rendimiento (En caso de existir esta implementación para el cliente)
+  
+  Acá una ejemplo asociado a la incorporación del cliente MINI a esta tabla
+``` SQL
+INSERT INTO `proyecto-mi-dw.datawarehouse.ClientesConsumos`(IDClienteConsumo,IDCliente,NombreCliente,TipoConsumo,BaseConsumo,TablaConsumo) 
+VALUES ((select count(1) from `proyecto-mi-dw.datawarehouse.ClientesConsumos`)+1,2,'MINI','GoogleCampaign','MINI','Campaign_4595408874'),
+((select count(1) from `proyecto-mi-dw.datawarehouse.ClientesConsumos`)+1,2,'MINI','GoogleCampaignBasicStats','MINI','CampaignBasicStats_4595408874'),
+((select count(1) from `proyecto-mi-dw.datawarehouse.ClientesConsumos`)+1,2,'MINI','FacebookAds','MINI','facebook_AdCostData'),
+((select count(1) from `proyecto-mi-dw.datawarehouse.ClientesConsumos`)+1,2,'MINI','MAXIMO','MINI','MAXIMORENDI_MINI');
+```
+5. Validar que el nuevo cliente se encuentre en la tabla de Ponderaciones. Si no se encuentra, se debe generar registro con el siguiente script SQL.
+
+``` SQL
+INSERT INTO `proyecto-mi-dw.datawarehouse.Ponderaciones` (Cliente,Ponderador,FechaCarga)
+VALUES ('NUEVO_CLIENTE',1.2,CURRENT_TIMESTAMP());
+```
+6. Finalmente, debemos validar que el cliente exista en la tabla de TipoCambio de BigQuery para el año y mes actual. En caso de no existir, se debe generar de la siguiente forma
+
+``` SQL
+INSERT INTO `proyecto-mi-dw.datawarehouse.TiposCambio` (IDTipoCambio,Industria,Cliente,AnoTipoCambio,MesTipoCambio,CambioUSD,FechaActualizacion)
+VALUES ((select count(1) from `proyecto-mi-dw.datawarehouse.TiposCambio`)+1,'Industria','Nuevo_Cliente',2022,5,850,'2022-05-17');
+```
+7. El último paso a considerar tiene relación con la creación del Saved Query asociado al cliente y su programación diaria (Scheduled Query).
