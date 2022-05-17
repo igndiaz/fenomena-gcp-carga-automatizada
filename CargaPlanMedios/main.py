@@ -40,13 +40,13 @@ def email_error(contenido,TipoCarga,error):
     """
 
     message = Mail(
-        to_emails=f'{getenv("CORREO1")}',
+        to_emails=f"{getenv('CORREO1')}",
         from_email=Email('igndiaz16@gmail.com', "Ignacio Díaz"),
         subject=f"[Atención] Error Carga de Datos {TipoCarga}",
         html_content=html_content
         )
-    message.add_to(f'{getenv("CORREO2")}')
-    message.add_cc(f'{getenv("CORREO3")}')
+    message.add_to(f"{getenv('CORREO2')}")
+    message.add_cc(f"{getenv('CORREO3')}")
 
     try:
         response = sg.send(message)
@@ -74,13 +74,13 @@ def email_exito(TipoCarga):
     """
 
     message = Mail(
-        to_emails=f'{getenv("CORREO1")}',
+        to_emails=f"{getenv('CORREO1')}",
         from_email=Email('igndiaz16@gmail.com', "Ignacio Díaz"),
         subject=f"Proceso de Carga de Datos {TipoCarga} Exitoso",
         html_content=html_content
         )
-    message.add_to(f'{getenv("CORREO2")}')
-    message.add_cc(f'{getenv("CORREO3")}')
+    message.add_to(f"{getenv('CORREO2')}")
+    message.add_cc(f"{getenv('CORREO3')}")
 
     try:
         response = sg.send(message)

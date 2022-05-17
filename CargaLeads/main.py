@@ -35,13 +35,13 @@ def email_error(contenido,TipoCarga,error):
     """
 
     message = Mail(
-        to_emails=f'{getenv("CORREO1")}',
+        to_emails=f"{getenv('CORREO1')}",
         from_email=Email('igndiaz16@gmail.com', "Ignacio Díaz"),
         subject=f"[Atención] Error Carga de Datos {TipoCarga}",
         html_content=html_content
         )
-    message.add_to(f'{getenv("CORREO2")}')
-    message.add_cc(f'{getenv("CORREO3")}')
+    message.add_to(f"{getenv('CORREO2')}")
+    message.add_cc(f"{getenv('CORREO3')}")
 
     try:
         response = sg.send(message)
@@ -67,15 +67,15 @@ def email_exito(TipoCarga):
       </body>
     </html>
     """
-
+    
     message = Mail(
-        to_emails=f'{getenv("CORREO1")}',
+        to_emails="igndiaz16@email.com",
         from_email=Email('igndiaz16@gmail.com', "Ignacio Díaz"),
         subject=f"Proceso de Carga de Datos {TipoCarga} Exitoso",
         html_content=html_content
         )
-    message.add_to(f'{getenv("CORREO2")}')
-    message.add_cc(f'{getenv("CORREO3")}')
+    message.add_to("ignacio.diaz.rosales@ing.uchile.cl")
+    message.add_cc("igndiaz16@gmail.com")
 
     try:
         response = sg.send(message)
@@ -92,7 +92,6 @@ def leer_archivo_json(bucket,nombre):
     blob = bucket.blob(nombre)
     dest_file = f'/tmp/{nombre}'
     blob.download_to_filename(dest_file)
-    blob.delete()
     with open(dest_file) as jsonFile:
         result = json.load(jsonFile)
         jsonFile.close()
@@ -105,6 +104,7 @@ def leer_archivo_leads(bucket,nombre,cliente,campanas,parametros):
     blob = bucket.blob(nombre)
     dest_file = f'/tmp/{nombre}'
     blob.download_to_filename(dest_file)
+    blob.delete()
     d = {}
     union = pd.DataFrame(columns = parametros["BASE"])
     for name in campanas:
@@ -321,7 +321,7 @@ def cargar_resultados(cliente_carga,idcarga,industria):
 def deleteResultados(NombreCliente,industria):
     bqclient = bigquery.Client()
     sql = f"""
-    DELETE FROM `proyecto-mi-dw.datawarehouse.Resultados{industria}` where IDCliente={NombreCliente};
+    DELETE FROM `proyecto-mi-dw.datawarehouse.Resultados{industria}` where Cliente={NombreCliente};
     """
     query_job = bqclient.query(sql)
     query_job.result()
@@ -378,7 +378,7 @@ def carga(event, context):
 
         #Generar dataframe CampanaMedios desde BigQuery para obtener IDCampanaMedio.
         try:
-            dfCampanaMedios=pd.read_gbq(f'SELECT IDCampanaMedio,Taxonomia as Homologacion FROM proyecto-mi-dw.datawarehouse.CampanaMedios{parametros["Industria"]}', project_id="proyecto-mi-dw")
+            dfCampanaMedios=pd.read_gbq(f'SELECT IDCampanaMedio,Taxonomia as Homologacion FROM `proyecto-mi-dw.datawarehouse.CampanaMedios{parametros["Industria"]}`', project_id="proyecto-mi-dw")
         except Exception as e:
             email_error("generación dataframe CampanaMedios desde BigQuery para obtener IDCampanaMedio","Leads",e)
 
@@ -399,8 +399,8 @@ def carga(event, context):
 
         #Generar dataframe a partir de Leads en BigQuery para comparar.
         try:
-            sqlString=','.join([str(elem) for elem in [*parametros["BASE"].values()]])
-            dfLeadsBQ=pd.read_gbq(f'SELECT IDCliente,IDDependencia,IDCampanaMedio,{sqlString} FROM proyecto-mi-dw.datawarehouse.Leads{parametros["Industria"]}', project_id="proyecto-mi-dw")
+            sqlString=','.join([str(elem) for elem in [*parametros["BASE"]]])
+            dfLeadsBQ=pd.read_gbq(f'SELECT IDCliente,IDCampanaMedio,{sqlString} FROM `proyecto-mi-dw.datawarehouse.Leads{parametros["Industria"]}`', project_id="proyecto-mi-dw")
             dfLeadsBQ["Rut"]=dfLeadsBQ["Rut"].astype(str)
         except Exception as e:
             email_error("generación dataframe a partir de datos de Leads en BigQuery","Leads",e)
@@ -424,7 +424,7 @@ def carga(event, context):
 
         #Generar dataframe a partir de Dependencias en BigQuery para comparar.
         try:
-            dfDependenciasBQ=pd.read_gbq(f'SELECT * FROM proyecto-mi-dw.datawarehouse.Dependencias{parametros["Industria"]}', project_id="proyecto-mi-dw")
+            dfDependenciasBQ=pd.read_gbq(f'SELECT * FROM `proyecto-mi-dw.datawarehouse.Dependencias{parametros["Industria"]}`', project_id="proyecto-mi-dw")
         except Exception as e:
             email_error("generación dataframe a partir de datos de Dependencias en BigQuery","Leads",e)
 
