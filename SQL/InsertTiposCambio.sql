@@ -1,0 +1,2 @@
+INSERT INTO `proyecto-mi-dw.datawarehouse.TiposCambio` (IDTipoCambio,Industria,Cliente,AnoTipoCambio,MesTipoCambio,CambioUSD,FechaActualizacion)
+VALUES ((select count(1) from `proyecto-mi-dw.datawarehouse.TiposCambio`)+1,'Industria','Nuevo_Cliente',2022,5,850,'2022-05-17');

@@ -1,0 +1,45 @@
+CREATE OR REPLACE TABLE `proyecto-mi-dw.datawarehouse.ResultadosDataStudioAutomotriz` AS
+(select 
+a.IDCampanaMedio,
+a.InicioCampana,
+a.FinCampana,
+a.FechaMeta,
+a.Version,
+a.FechaCargaPlan,
+a.Taxonomia,
+a.MetaImpresiones,
+a.MetaCPM,
+a.MetaClics,
+a.MetaCPC,
+a.MetaCTR,
+a.MetaFormularios,
+a.MetaCPL,
+a.MetaViews,
+a.MetaCPV,
+a.MetaValorNeto,
+b.IDRegionCampana,
+b.Subcategoria,
+b.Target,
+b.Foco,
+c.Soporte,
+c.Formato,
+c.Ubicacion,
+c.TipoCompra,
+d.IDCliente,
+d.NombrePlan,
+d.AnoPlan,
+d.MesPlan,
+f.IDTipoCambio,
+f.FuenteResultado,
+f.HomologacionCampana,
+f.HomologacionCampanaOriginal,
+f.ResultadosImpresiones,
+f.ResultadosClics,
+f.ResultadosFormularios,
+f.ResultadosValorNeto,
+f.ResultadosValorNetoCalculado
+from `proyecto-mi-dw.datawarehouse.CampanaMediosAutomotriz` a
+left join `proyecto-mi-dw.datawarehouse.CampanasAutomotriz` b using (IDCampana)
+left join `proyecto-mi-dw.datawarehouse.MediosAutomotriz` c using (IDMedio)
+left join `proyecto-mi-dw.datawarehouse.PlanMediosAutomotriz` d using (IDPlan)
+left join `proyecto-mi-dw.datawarehouse.ResultadosAutomotriz` f using (IDCampanaMedio));
