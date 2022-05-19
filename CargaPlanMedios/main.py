@@ -23,7 +23,7 @@ import os
 #Enviar correos
 def email_error(contenido,TipoCarga,error):
 
-    sg = SendGridAPIClient('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')
+    sg = SendGridAPIClient(getenv("SENDGRID"))
     correo1=os.environ.get('CORREO1', 'No especificado')
     correo2=os.environ.get('CORREO2', 'No especificado')
     correo3=os.environ.get('CORREO3', 'No especificado')
@@ -65,7 +65,7 @@ def email_error(contenido,TipoCarga,error):
     
 def email_exito(TipoCarga):
 
-    sg = SendGridAPIClient('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')
+    sg = SendGridAPIClient(getenv("SENDGRID"))
     correo1=os.environ.get('CORREO1', 'No especificado')
     correo2=os.environ.get('CORREO2', 'No especificado')
     correo3=os.environ.get('CORREO3', 'No especificado')

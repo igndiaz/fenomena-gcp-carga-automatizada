@@ -97,6 +97,7 @@ Para generar el proceso de carga de Plan de Medios asociado a una nueva industri
     - __CORREO1, CORREO2 y CORREO3__: Estas direcciones están asociadas a las alertas ante un éxito o falla de la carga de leads. **Siempre se debe crear la variable CORREO1**, las demás son opcionales si queremos agregar otros correos que reciban las alertas.
     - __BUCKET__: Esta variable referencia en el script el bucket generado para la industria de esta Cloud Function.
     - __PARAMETROS__: Este valor corresponde al nombre del archivo de parámetros que será cargado en el bucket, lo idea es que se pueda seguir una nomenclatura del tipo __ParametrosMediosIndustria.json__
+    - __SENDGRID__: Acá se debe ingresar la KEY que entrega el servicio de Sendgrid para poder realizar el envío de correos.
 
 3. Creadas las componentes de GCP, se debe proceder a crear las siguientes tablas en BigQuery. 
 - PlanMediosIndustria

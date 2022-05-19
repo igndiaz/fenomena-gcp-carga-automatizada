@@ -178,6 +178,7 @@ Para generar el proceso de carga de Leads asociada a una nueva industria, se deb
     - __CORREO1, CORREO2 y CORREO3__: Estas direcciones están asociadas a las alertas ante un éxito o falla de la carga de leads. **Siempre se debe crear la variable CORREO1**, las demás son opcionales si queremos agregar otros correos que reciban las alertas.
     - __BUCKET__: Esta variable referencia en el script el bucket generado para la industria de esta Cloud Function.
     - __PARAMETROS__: Este valor corresponde al nombre del archivo de parámetros que será cargado en el bucket, lo idea es que se pueda seguir una nomenclatura del tipo __ParametrosLeadsIndustria.json__
+    - __SENDGRID__: Acá se debe ingresar la KEY que entrega el servicio de Sendgrid para poder realizar el envío de correos.
 
 3. Creadas las componentes de GCP, se debe proceder a crear la tabla Leads y Dependencias en BigQuery. Para crear estas tablas se pueden ayudar en los DDL dentro del directorio SQL de este repositorio. La idea es que las tablas estén creadas con la nomenclatura asociada a la industria (Por ejemplo para la industria del Retail, debieramos crear tablas llamadas LeadsRetail y DependenciasRetail)
 
