@@ -18,7 +18,7 @@ import os
 #Enviar correos
 def email_error(contenido,TipoCarga,error):
 
-    sg = SendGridAPIClient(getenv("SENDGRID"))
+    sg = SendGridAPIClient(f'{getenv("SENDGRID")}')
     correo1=os.environ.get('CORREO1', 'No especificado')
     correo2=os.environ.get('CORREO2', 'No especificado')
     correo3=os.environ.get('CORREO3', 'No especificado')
@@ -40,7 +40,7 @@ def email_error(contenido,TipoCarga,error):
 
     message = Mail(
         to_emails=correo1,
-        from_email=Email('igndiaz16@gmail.com', "Ignacio Díaz"),
+        from_email=Email('dubraska.diaz@fenomena.cl', "Dubraska Díaz"),
         subject=f"[Atención] Error Carga de Datos {TipoCarga}",
         html_content=html_content
         )
@@ -60,7 +60,7 @@ def email_error(contenido,TipoCarga,error):
     
 def email_exito(TipoCarga):
 
-    sg = SendGridAPIClient(getenv("SENDGRID"))
+    sg = SendGridAPIClient(f'{getenv("SENDGRID")}')
     correo1=os.environ.get('CORREO1', 'No especificado')
     correo2=os.environ.get('CORREO2', 'No especificado')
     correo3=os.environ.get('CORREO3', 'No especificado')
@@ -79,7 +79,7 @@ def email_exito(TipoCarga):
     
     message = Mail(
         to_emails=correo1,
-        from_email=Email('igndiaz16@gmail.com', "Ignacio Díaz"),
+        from_email=Email('dubraska.diaz@fenomena.cl', "Dubraska Díaz"),
         subject=f"Proceso de Carga de Datos {TipoCarga} Exitoso",
         html_content=html_content
         )
