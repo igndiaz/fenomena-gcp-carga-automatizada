@@ -174,8 +174,8 @@ Para generar el proceso de carga de Leads asociada a una nueva industria, se deb
 
     __Runtime environment variables__
 
-    En esta sección se deben crear cuatro variables asociadas al entorno de ejecución, estas son:
-    - __CORREO1, CORREO2 y CORREO3__: Estas direcciones están asociadas a las alertas ante un éxito o falla de la carga de leads. **Siempre se deben crear los tres**, de no tener suficientes correos se pueden repetir para completar esos tres.
+    En esta sección se deben crear cinco variables asociadas al entorno de ejecución, estas son:
+    - __CORREO1, CORREO2 y CORREO3__: Estas direcciones están asociadas a las alertas ante un éxito o falla de la carga de leads. **Siempre se debe crear la variable CORREO1**, las demás son opcionales si queremos agregar otros correos que reciban las alertas.
     - __BUCKET__: Esta variable referencia en el script el bucket generado para la industria de esta Cloud Function.
     - __PARAMETROS__: Este valor corresponde al nombre del archivo de parámetros que será cargado en el bucket, lo idea es que se pueda seguir una nomenclatura del tipo __ParametrosLeadsIndustria.json__
 
@@ -187,6 +187,7 @@ Para generar el proceso de carga de Leads asociada a una nueva industria, se deb
 - Estructura entregada en los campos BASE y DEPENDENCIAS dentro del archivo (En función de la estructura creada dentro de BigQuery en las tablas de destino de la carga)
 - Cambiar a la industria correspondiente en el campo Industria.
 - Asociar el cliente correspondiente y generar el mapeo de campos asociadas a las nuevas campañas a cargar.
+- Modificar en el campo REEMPLAZOS, los cambios necesarios en la Taxonomía en función de lo detectado para la industria.
 
 ### Nuevo cliente
 

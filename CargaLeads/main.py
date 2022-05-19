@@ -13,11 +13,15 @@ import sendgrid
 import re
 import sys
 from os import getenv
+import os
 
 #Enviar correos
 def email_error(contenido,TipoCarga,error):
 
     sg = SendGridAPIClient('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')
+    correo1=os.environ.get('CORREO1', 'No especificado')
+    correo2=os.environ.get('CORREO2', 'No especificado')
+    correo3=os.environ.get('CORREO3', 'No especificado')
     html_content = f"""\
     <html>
       <head><p style="font-size:15px;font-family:sans-serif;">Atención, </p></head>
@@ -35,13 +39,15 @@ def email_error(contenido,TipoCarga,error):
     """
 
     message = Mail(
-        to_emails=f"{getenv('CORREO1')}",
+        to_emails=correo1,
         from_email=Email('igndiaz16@gmail.com', "Ignacio Díaz"),
         subject=f"[Atención] Error Carga de Datos {TipoCarga}",
         html_content=html_content
         )
-    message.add_to(f"{getenv('CORREO2')}")
-    message.add_cc(f"{getenv('CORREO3')}")
+    if correo2 != 'No especificado':
+        message.add_to(correo2)
+    if correo3 != 'No especificado':
+        message.add_cc(correo3)
 
     try:
         response = sg.send(message)
@@ -55,6 +61,9 @@ def email_error(contenido,TipoCarga,error):
 def email_exito(TipoCarga):
 
     sg = SendGridAPIClient('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')
+    correo1=os.environ.get('CORREO1', 'No especificado')
+    correo2=os.environ.get('CORREO2', 'No especificado')
+    correo3=os.environ.get('CORREO3', 'No especificado')
     html_content = f"""\
     <html>
       <head><p style="font-size:15px;font-family:sans-serif;">Felicitaciones, </p></head>
@@ -69,13 +78,15 @@ def email_exito(TipoCarga):
     """
     
     message = Mail(
-        to_emails="igndiaz16@email.com",
+        to_emails=correo1,
         from_email=Email('igndiaz16@gmail.com', "Ignacio Díaz"),
         subject=f"Proceso de Carga de Datos {TipoCarga} Exitoso",
         html_content=html_content
         )
-    message.add_to("ignacio.diaz.rosales@ing.uchile.cl")
-    message.add_cc("igndiaz16@gmail.com")
+    if correo2 != 'No especificado':
+        message.add_to(correo2)
+    if correo3 != 'No especificado':
+        message.add_cc(correo3)
 
     try:
         response = sg.send(message)
@@ -225,13 +236,13 @@ def cargar_resultados(cliente_carga,idcarga,industria):
         sqlMaximo=f"""
         UNION ALL
         SELECT REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(a.TAXONOMIA, r"[^a-zA-Z0-9-_Ñ$.&]", ''),"Ñ","N"),"__","_"),"LEAD-ADS","LEADADS"),"CAMPANA-COVID","CAMPANACOVID"),"LINK-ADS","LINKADS"),"..",""),"NUEVA-SUCURSAL-VITACURA","NUEVASUCURSALVITACURA") CampaignName,a.TAXONOMIA HomologacionCampanaOriginal,a.FECHA _DATA_DATE,a.IMPRESIONES Impressions,a.INVERSION Cost,a.CLICKS Clicks,b.IDCampanaMedio 
-        FROM `proyecto-mi-dw.{getConsumo(idcarga,"TablaConsumo","MAXIMO")}.{getConsumo(idcarga,"TablaConsumo","MAXIMO")}` a
+        FROM `proyecto-mi-dw.{getConsumo(idcarga,"BaseConsumo","MAXIMO")}.{getConsumo(idcarga,"TablaConsumo","MAXIMO")}` a
         LEFT JOIN `proyecto-mi-dw.datawarehouse.CampanaMedios{industria}` b on REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(a.TAXONOMIA, r"[^a-zA-Z0-9-_Ñ$.&]", ''),"Ñ","N"),"__","_"),"LEAD-ADS","LEADADS"),"CAMPANA-COVID","CAMPANACOVID"),"LINK-ADS","LINKADS"),"..",""),"NUEVA-SUCURSAL-VITACURA","NUEVASUCURSALVITACURA")=b.Taxonomia and a.FECHA=b.FechaMeta
         WHERE a.TIPOCAMPANA='Performance Max'
         """
     sql = f"""
-    INSERT INTO `proyecto-mi-dw.datawarehouse.Resultados{industria}` AS
-    SELECT ROW_NUMBER() OVER()  as IDResultado,{cliente_carga} as Cliente,*
+    INSERT INTO `proyecto-mi-dw.datawarehouse.Resultados{industria}`
+    SELECT ROW_NUMBER() OVER()  as IDResultado,'{cliente_carga}' as Cliente,*
     FROM (
     -- FacebookAds
     SELECT 
@@ -266,7 +277,7 @@ def cargar_resultados(cliente_carga,idcarga,industria):
     where a.FechaActualizacion = (select max(FechaActualizacion) from `proyecto-mi-dw.datawarehouse.TiposCambio` b
     where a.Cliente=b.Cliente and a.Industria=b.Industria and a.AnoTipoCambio=b.AnoTipoCambio and a.MesTipoCambio=b.MesTipoCambio
     )) c 
-    on (EXTRACT(YEAR FROM a.FechaResultado) = c.AnoTipoCambio and EXTRACT(MONTH FROM a.FechaResultado) = c.MesTipoCambio and c.Industria={industria} and c.Cliente={cliente_carga})
+    on (EXTRACT(YEAR FROM a.FechaResultado) = c.AnoTipoCambio and EXTRACT(MONTH FROM a.FechaResultado) = c.MesTipoCambio and c.Industria='{industria}' and c.Cliente='{cliente_carga}')
     left join 
     (SELECT Homologacion CAMPANA_REGISTRO,
     Fecha,
@@ -310,8 +321,8 @@ def cargar_resultados(cliente_carga,idcarga,industria):
     from `proyecto-mi-dw.datawarehouse.TiposCambio` a
     where a.FechaActualizacion = (select max(FechaActualizacion) from `proyecto-mi-dw.datawarehouse.TiposCambio` b
     where a.Cliente=b.Cliente and a.Industria=b.Industria and a.AnoTipoCambio=b.AnoTipoCambio and a.MesTipoCambio=b.MesTipoCambio
-    )) c parametros
-    on (EXTRACT(YEAR FROM a.FechaResultado) = c.AnoTipoCambio and EXTRACT(MONTH FROM a.FechaResultado) = c.MesTipoCambio and c.Industria={industria} and c.Cliente={cliente_carga}))
+    )) c
+    on (EXTRACT(YEAR FROM a.FechaResultado) = c.AnoTipoCambio and EXTRACT(MONTH FROM a.FechaResultado) = c.MesTipoCambio and c.Industria='{industria}' and c.Cliente='{cliente_carga}'))
     """
     query_job = bqclient.query(sql)
     result=query_job.result()
@@ -321,7 +332,7 @@ def cargar_resultados(cliente_carga,idcarga,industria):
 def deleteResultados(NombreCliente,industria):
     bqclient = bigquery.Client()
     sql = f"""
-    DELETE FROM `proyecto-mi-dw.datawarehouse.Resultados{industria}` where Cliente={NombreCliente};
+    DELETE FROM `proyecto-mi-dw.datawarehouse.Resultados{industria}` where Cliente='{NombreCliente}';
     """
     query_job = bqclient.query(sql)
     query_job.result()
@@ -451,14 +462,19 @@ def carga(event, context):
                 dfLeads["Telefono"]=dfLeads["Telefono"].astype(str)
                 carga_leadsbq(dfLeads,f'proyecto-mi-dw.datawarehouse.Leads{parametros["Industria"]}')
                 print("Carga exitosa")
-                email_exito("Leads")
         except Exception as e:
             email_error("proceso de carga tabla Leads en BigQuery","Leads",e)
 
-        #Cargar resultados bigquery
+        #delete resultados bigquery
         try:
             deleteResultados(cliente_carga,parametros["Industria"])
+        except Exception as e:
+            email_error("borrar resultados BigQuery","Leads",e)
+
+        #Cargar resultados bigquery
+        try:
             cargar_resultados(cliente_carga,idcliente,parametros["Industria"])
             print("Actualizada tabla resultados BigQuery")
+            email_exito("Leads")
         except Exception as e:
             email_error("cargar resultados BigQuery","Leads",e)
