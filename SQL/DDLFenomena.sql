@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.ResultadosIndustria` (
     IDResultado INTEGER  NOT NULL,
     Cliente STRING  NOT NULL,
     IDCampanaMedio INTEGER,
-    IDTipoCambio INTEGER  NOT NULL,
+    IDTipoCambio INTEGER,
     FuenteResultado STRING  NOT NULL,
     HomologacionCampana	STRING  NOT NULL,
     HomologacionCampanaOriginal	STRING  NOT NULL,
