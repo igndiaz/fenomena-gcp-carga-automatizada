@@ -1,3 +1,4 @@
+--Plan de Medios
 CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.MediosAutomotriz` (
     IDMedio INTEGER NOT NULL,
     Soporte STRING,
@@ -99,15 +100,6 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.ResultadosAutomotriz` (
     ResultadosValorNetoCalculado FLOAT64	
 );
 
-CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.Clientes` (
-    IDCliente INTEGER  NOT NULL,
-    Marca STRING  NOT NULL,
-    Pais STRING  NOT NULL,
-    Industria STRING NOT NULL,
-    Tipo STRING,
-    Tamano STRING
-);
-
 CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.PlanMediosAutomotriz` (
     IDPlan INTEGER NOT NULL,
     IDCliente INTEGER NOT NULL,
@@ -149,6 +141,14 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.PlanMediosHistoricoAuto
     MetaPlanValorNeto FLOAT64	
 );
 
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.RegionCampanaAutomotriz` (
+    IDRegionCampana INTEGER NOT NULL,
+    RegionCampana STRING NOT NULL,	
+    PaisCampana	STRING NOT NULL,
+    SucursalCampana	STRING	
+);
+
+--Leads
 CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.DependenciasAutomotriz` (
     IDDependencia STRING NOT NULL,
     IDCliente INTEGER NOT NULL,
@@ -184,11 +184,15 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.LeadsAutomotriz` (
     UTM	STRING
 );
 
-CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.RegionCampanaAutomotriz` (
-    IDRegionCampana INTEGER NOT NULL,
-    RegionCampana STRING NOT NULL,	
-    PaisCampana	STRING NOT NULL,
-    SucursalCampana	STRING	
+--Tablas carga manual
+
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.Clientes` (
+    IDCliente INTEGER  NOT NULL,
+    Marca STRING  NOT NULL,
+    Pais STRING  NOT NULL,
+    Industria STRING NOT NULL,
+    Tipo STRING,
+    Tamano STRING
 );
 
 CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.ClientesConsumos` (
