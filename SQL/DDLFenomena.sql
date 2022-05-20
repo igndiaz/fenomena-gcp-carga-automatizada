@@ -1,5 +1,5 @@
 --Plan de Medios
-CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.MediosAutomotriz` (
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.MediosIndustria` (
     IDMedio INTEGER NOT NULL,
     Soporte STRING,
     Formato STRING,
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.MediosAutomotriz` (
     TipoCompra STRING
 );
 
-CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.CampanasAutomotriz` (
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.CampanasIndustria` (
     IDCampana INTEGER NOT NULL,
     IDRegionCampana INTEGER NOT NULL,
     Subcategoria STRING,
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.CampanasAutomotriz` (
     Foco STRING
 );
 
-CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.CampanaMediosAutomotriz` (
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.CampanaMediosIndustria` (
     IDCampanaMedio INTEGER NOT NULL,
     IDPlan INTEGER NOT NULL,
     IDMedio INTEGER NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.CampanaMediosAutomotriz
     MetaValorNeto FLOAT64
 );
 
-CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.CampanaMediosPeriodoAutomotriz` (
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.CampanaMediosPeriodoIndustria` (
     IDCampanaMedio INTEGER NOT NULL,
     IDPlan INTEGER NOT NULL,
     IDMedio INTEGER NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.CampanaMediosPeriodoAut
     MetaValorNeto FLOAT64
 );
 
-CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.CampanaMediosHistoricoAutomotriz` (
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.CampanaMediosHistoricoIndustria` (
     IDCampanaMedioHistorico INTEGER NOT NULL,
     IDCampanaMedio INTEGER NOT NULL,
     IDPlan INTEGER NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.CampanaMediosHistoricoA
     MetaValorNeto FLOAT64
 );
 
-CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.ResultadosAutomotriz` (
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.ResultadosIndustria` (
     IDResultado INTEGER  NOT NULL,
     Cliente STRING  NOT NULL,
     IDCampanaMedio INTEGER  NOT NULL,
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.ResultadosAutomotriz` (
     ResultadosValorNetoCalculado FLOAT64	
 );
 
-CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.PlanMediosAutomotriz` (
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.PlanMediosIndustria` (
     IDPlan INTEGER NOT NULL,
     IDCliente INTEGER NOT NULL,
     NombrePlan STRING NOT NULL,
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.PlanMediosAutomotriz` (
     MetaPlanValorNeto FLOAT64	
 );
 
-CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.PlanMediosHistoricoAutomotriz` (
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.PlanMediosHistoricoIndustria` (
     IDPlanMediosHistorico INTEGER NOT NULL,
     IDPlan INTEGER NOT NULL,
     IDCliente INTEGER NOT NULL,
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.PlanMediosHistoricoAuto
     MetaPlanValorNeto FLOAT64	
 );
 
-CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.RegionCampanaAutomotriz` (
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.RegionCampanaIndustria` (
     IDRegionCampana INTEGER NOT NULL,
     RegionCampana STRING NOT NULL,	
     PaisCampana	STRING NOT NULL,
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.RegionCampanaAutomotriz
 );
 
 --Leads
-CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.DependenciasAutomotriz` (
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.DependenciasIndustria` (
     IDDependencia STRING NOT NULL,
     IDCliente INTEGER NOT NULL,
     Ciudad STRING,
@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.DependenciasAutomotriz`
     TipoDependencia	STRING,	
 );
 
-CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.LeadsAutomotriz` (
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.LeadsIndustria` (
     IDLead	INTEGER NOT NULL,
     IDCliente INTEGER NOT NULL,
     IDDependencia STRING,
