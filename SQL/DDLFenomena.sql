@@ -84,14 +84,14 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.CampanaMediosHistoricoA
 );
 
 CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.ResultadosAutomotriz` (
-    IDResultado INTEGER,
-    Cliente STRING,
-    IDCampanaMedio INTEGER,
-    IDTipoCambio INTEGER,
-    FuenteResultado STRING,
-    HomologacionCampana	STRING,
-    HomologacionCampanaOriginal	STRING,
-    FechaResultado DATE,
+    IDResultado INTEGER  NOT NULL,
+    Cliente STRING  NOT NULL,
+    IDCampanaMedio INTEGER  NOT NULL,
+    IDTipoCambio INTEGER  NOT NULL,
+    FuenteResultado STRING  NOT NULL,
+    HomologacionCampana	STRING  NOT NULL,
+    HomologacionCampanaOriginal	STRING  NOT NULL,
+    FechaResultado DATE  NOT NULL,
     ResultadosImpresiones FLOAT64,
     ResultadosClics	FLOAT64,
     ResultadosFormularios INTEGER,
@@ -100,22 +100,22 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.ResultadosAutomotriz` (
 );
 
 CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.Clientes` (
-    IDCliente INTEGER,
-    Marca STRING,
-    Pais STRING,
-    Industria STRING,
+    IDCliente INTEGER  NOT NULL,
+    Marca STRING  NOT NULL,
+    Pais STRING  NOT NULL,
+    Industria STRING NOT NULL,
     Tipo STRING,
     Tamano STRING
 );
 
 CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.PlanMediosAutomotriz` (
-    IDPlan INTEGER,
-    IDCliente INTEGER,
-    NombrePlan STRING,
-    Version	INTEGER,
-    FechaCargaPlan DATETIME,
-    AnoPlan	INTEGER,
-    MesPlan	STRING,
+    IDPlan INTEGER NOT NULL,
+    IDCliente INTEGER NOT NULL,
+    NombrePlan STRING NOT NULL,
+    Version	INTEGER NOT NULL,
+    FechaCargaPlan DATETIME NOT NULL,
+    AnoPlan	INTEGER NOT NULL,
+    MesPlan	STRING NOT NULL,
     MetaPlanImpresiones FLOAT64,
     MetaPlanCPM	FLOAT64,
     MetaPlanClics FLOAT64,
@@ -129,14 +129,14 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.PlanMediosAutomotriz` (
 );
 
 CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.PlanMediosHistoricoAutomotriz` (
-    IDPlanMediosHistorico INTEGER,
-    IDPlan INTEGER,
-    IDCliente INTEGER,
-    NombrePlan STRING,
-    Version	INTEGER,
-    FechaCargaPlan DATETIME,
-    AnoPlan	INTEGER,
-    MesPlan	STRING,
+    IDPlanMediosHistorico INTEGER NOT NULL,
+    IDPlan INTEGER NOT NULL,
+    IDCliente INTEGER NOT NULL,
+    NombrePlan STRING NOT NULL,
+    Version	INTEGER NOT NULL,
+    FechaCargaPlan DATETIME NOT NULL,
+    AnoPlan	INTEGER NOT NULL,
+    MesPlan	STRING NOT NULL,
     MetaPlanImpresiones FLOAT64,
     MetaPlanCPM	FLOAT64,
     MetaPlanClics FLOAT64,
@@ -160,8 +160,8 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.DependenciasAutomotriz`
 );
 
 CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.LeadsAutomotriz` (
-    IDLead	INTEGER,
-    IDCliente INTEGER,
+    IDLead	INTEGER NOT NULL,
+    IDCliente INTEGER NOT NULL,
     IDDependencia STRING,
     IDCampanaMedio INTEGER,
     Rut	STRING,
@@ -185,8 +185,40 @@ CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.LeadsAutomotriz` (
 );
 
 CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.RegionCampanaAutomotriz` (
-    IDRegionCampana INTEGER,
-    RegionCampana STRING,	
-    PaisCampana	STRING,
+    IDRegionCampana INTEGER NOT NULL,
+    RegionCampana STRING NOT NULL,	
+    PaisCampana	STRING NOT NULL,
     SucursalCampana	STRING	
+);
+
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.ClientesConsumos` (
+    IDClienteConsumos INTEGER NOT NULL,
+    IDCliente INTEGER NOT NULL,	
+    NombreCliente STRING NOT NULL,
+    TipoConsumo	STRING NOT NULL,
+    BaseConsumo	STRING NOT NULL,
+    TablaConsumo STRING NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.TiposCambio` (
+    IDTipoCambio INTEGER NOT NULL,
+    Industria STRING NOT NULL,	
+    Cliente STRING NOT NULL,
+    AnoTipoCambio INTEGER NOT NULL,
+    MesTipoCambio INTEGER NOT NULL,
+    CambioUSD INTEGER NOT NULL,
+    FechaActualizacion DATE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.Ponderaciones` (
+    Cliente STRING NOT NULL,
+    Ponderador FLOAT64 NOT NULL,	
+    FechaCarga TIMESTAMP NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `proyecto-mi-dw.datawarehouse.PonderacionesHistoricas` (
+    IDPonderacionesHist INTEGER NOT NULL,
+    Cliente STRING NOT NULL,
+    Ponderador FLOAT64 NOT NULL,	
+    FechaCarga TIMESTAMP NOT NULL
 );
