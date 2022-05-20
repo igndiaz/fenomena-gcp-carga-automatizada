@@ -129,7 +129,7 @@ Para incorporar un __Nuevo Cliente__, para una industria existente o recién cre
 2. Asegurar que cliente se encuentre creado en la tabla de Clientes de BigQuery. A continuación el SQL de creación básico.
 
 ``` SQL
-INSERT INTO `proyecto-mi-dw.datawarehouse.Clientes`(IdCliente,Marca,Pais,Automotriz) 
+INSERT INTO `proyecto-mi-dw.datawarehouse.Clientes`(IdCliente,Marca,Pais,Industria) 
 VALUES ((select count(1) from `proyecto-mi-dw.datawarehouse.Clientes`)+1,'BMW','Chile','Automotriz');
 ```
 4. Validar que el nuevo cliente se encuentre en la tabla ClientesConsumos, la información referente a:
