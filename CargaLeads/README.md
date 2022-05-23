@@ -228,7 +228,7 @@ Para incorporar un __Nuevo Cliente__, para una industria existente o recién cre
 
 ``` SQL
 INSERT INTO `proyecto-mi-dw.datawarehouse.Clientes`(IdCliente,Marca,Pais,Industria) 
-VALUES ((select count(1) from `proyecto-mi-dw.datawarehouse.Clientes`)+1,'BMW','Chile','Automotriz');
+VALUES ((select count(1) from `proyecto-mi-dw.datawarehouse.Clientes`)+1,'NUEVO_CLIENTE','Chile','Industria');
 ```
 4. Validar que el nuevo cliente se encuentre en la tabla ClientesConsumos, la información referente a:
    - Base y tabla consumos GoogleCampaign
