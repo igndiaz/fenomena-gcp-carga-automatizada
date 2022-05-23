@@ -1,6 +1,7 @@
 INSERT INTO `proyecto-mi-dw.datawarehouse.ResultadosAutomotriz`
 SELECT a.*
 FROM (SELECT ROW_NUMBER() OVER() + (select count(1) from `proyecto-mi-dw.datawarehouse.ResultadosAutomotriz`) as IDResultado,
+'BMW' as Cliente,
 a.IDCampanaMedio,
 c.IDTipoCambio,
 'GoogleAds' as FuenteResultado,
