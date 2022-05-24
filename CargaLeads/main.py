@@ -328,6 +328,60 @@ def cargar_resultados(cliente_carga,idcarga,industria):
     result=query_job.result()
     return result
 
+#Query para crear y cargar DataStudio
+def cargar_resultadosDataStudio(industria):
+    bqclient = bigquery.Client()
+    sql=f"""
+    CREATE OR REPLACE TABLE `proyecto-mi-dw.datawarehouse.ResultadosDataStudio{industria}` AS
+    (select 
+    a.IDCampanaMedio,
+    a.InicioCampana,
+    a.FinCampana,
+    a.FechaMeta,
+    a.Version,
+    a.FechaCargaPlan,
+    a.Taxonomia,
+    a.MetaImpresiones,
+    a.MetaCPM,
+    a.MetaClics,
+    a.MetaCPC,
+    a.MetaCTR,
+    a.MetaFormularios,
+    a.MetaCPL,
+    a.MetaViews,
+    a.MetaCPV,
+    a.MetaValorNeto,
+    b.IDRegionCampana,
+    b.Subcategoria,
+    b.Target,
+    b.Foco,
+    c.Soporte,
+    c.Formato,
+    c.Ubicacion,
+    c.TipoCompra,
+    d.IDCliente,
+    d.NombrePlan,
+    d.AnoPlan,
+    d.MesPlan,
+    f.IDTipoCambio,
+    f.FuenteResultado,
+    f.HomologacionCampana,
+    f.HomologacionCampanaOriginal,
+    f.ResultadosImpresiones,
+    f.ResultadosClics,
+    f.ResultadosFormularios,
+    f.ResultadosValorNeto,
+    f.ResultadosValorNetoCalculado
+    from `proyecto-mi-dw.datawarehouse.CampanaMedios{industria}` a
+    left join `proyecto-mi-dw.datawarehouse.Campanas{industria}` b using (IDCampana)
+    left join `proyecto-mi-dw.datawarehouse.Medios{industria}` c using (IDMedio)
+    left join `proyecto-mi-dw.datawarehouse.PlanMedios{industria}` d using (IDPlan)
+    left join `proyecto-mi-dw.datawarehouse.Resultados{industria}` f using (IDCampanaMedio));
+    """
+    query_job = bqclient.query(sql)
+    result=query_job.result()
+    return result
+
 #Eliminar Resultados
 def deleteResultados(NombreCliente,industria):
     bqclient = bigquery.Client()
@@ -474,6 +528,7 @@ def carga(event, context):
         #Cargar resultados bigquery
         try:
             cargar_resultados(cliente_carga,idcliente,parametros["Industria"])
+            cargar_resultadosDataStudio(parametros["Industria"])
             print("Actualizada tabla resultados BigQuery")
             email_exito("Leads")
         except Exception as e:
