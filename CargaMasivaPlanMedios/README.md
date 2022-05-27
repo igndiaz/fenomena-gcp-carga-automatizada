@@ -58,3 +58,11 @@ Para generar el proceso de carga masiva de Plan de Medios, se deben generar los 
 - ResultadosIndustria
   
 Para crear estas tablas se pueden ayudar en los DDL dentro del directorio SQL de este repositorio. La idea es que las tablas estén creadas con la nomenclatura asociada a la industria (Por ejemplo para la industria del Retail, debieramos crear tablas llamadas PlanMediosRetail y CampanaMediosRetail)
+
+### Proceso de Carga
+
+Ya con la construcción de los componentes listo. Se deben realizar los siguientes pasos:
+
+1. Cargar el archivo de carga masiva asociado al Plan de Medios (.xlsx) al mismo bucket definido como trigger para la Cloud Function.
+
+2. Verificar en la sección de logs de la Cloud Function, que exista un status ok de la ejecución de la función.
