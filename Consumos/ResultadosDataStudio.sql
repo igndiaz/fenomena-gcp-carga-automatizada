@@ -42,4 +42,4 @@ from `proyecto-mi-dw.datawarehouse.CampanaMediosAutomotriz` a
 left join `proyecto-mi-dw.datawarehouse.CampanasAutomotriz` b using (IDCampana)
 left join `proyecto-mi-dw.datawarehouse.MediosAutomotriz` c using (IDMedio)
 left join `proyecto-mi-dw.datawarehouse.PlanMediosAutomotriz` d using (IDPlan)
-left join `proyecto-mi-dw.datawarehouse.ResultadosAutomotriz` f using (IDCampanaMedio));
+left join `proyecto-mi-dw.datawarehouse.ResultadosAutomotriz` f on (a.IDCampanaMedio=f.IDCampanaMedio and a.FechaMeta=f.FechaResultado));

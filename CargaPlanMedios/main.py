@@ -424,7 +424,7 @@ def cargar_resultadosDataStudio(industria):
     left join `proyecto-mi-dw.datawarehouse.Campanas{industria}` b using (IDCampana)
     left join `proyecto-mi-dw.datawarehouse.Medios{industria}` c using (IDMedio)
     left join `proyecto-mi-dw.datawarehouse.PlanMedios{industria}` d using (IDPlan)
-    left join `proyecto-mi-dw.datawarehouse.Resultados{industria}` f using (IDCampanaMedio));
+    left join `proyecto-mi-dw.datawarehouse.Resultados{industria}` f on (a.IDCampanaMedio=f.IDCampanaMedio and a.FechaMeta=f.FechaResultado));
     """
     query_job = bqclient.query(sql)
     result=query_job.result()
