@@ -381,6 +381,8 @@ def carga(event, context):
         # RegionCampana
         dfRegionCampana=dfCampanaMedios[["RegionCampana","SucursalCampana"]].drop_duplicates()
         dfRegionCampana.insert(1, 'PaisCampana','Chile')
+        dfRegionCampanaBQ=pd.read_gbq(f'SELECT RegionCampana,SucursalCampana,PaisCampana FROM `proyecto-mi-dw.datawarehouse.RegionCampana{getenv("INDUSTRIA")}`', project_id="proyecto-mi-dw")
+        dfRegionCampana=pd.merge(dfRegionCampana, dfRegionCampanaBQ, how="left", indicator=True).query('_merge=="left_only"').iloc[: , :-1]
         dfRegionCampana.insert(0, 'IDRegionCampana', range(contar(f'RegionCampana{getenv("INDUSTRIA")}')+1,contar(f'RegionCampana{getenv("INDUSTRIA")}') + len(dfRegionCampana)+1))
         carga_bq(dfRegionCampana,f'proyecto-mi-dw.datawarehouse.RegionCampana{getenv("INDUSTRIA")}')
         dfRegionCampanasBQ=pd.read_gbq(f'SELECT * FROM `proyecto-mi-dw.datawarehouse.RegionCampana{getenv("INDUSTRIA")}`', project_id="proyecto-mi-dw")   
@@ -388,11 +390,15 @@ def carga(event, context):
 
         # Campanas
         dfCampanas = dfCampanaMedios[["IDRegionCampana","Subcategoria"]].drop_duplicates()
+        dfCampanasBQ=pd.read_gbq(f'SELECT IDRegionCampana,Subcategoria FROM `proyecto-mi-dw.datawarehouse.Campanas{getenv("INDUSTRIA")}`', project_id="proyecto-mi-dw")
+        dfCampanas=pd.merge(dfCampanas, dfCampanasBQ, how="left", indicator=True).query('_merge=="left_only"').iloc[: , :-1]
         dfCampanas.insert(0, 'IDCampana', range(contar(f'Campanas{getenv("INDUSTRIA")}')+1,contar(f'Campanas{getenv("INDUSTRIA")}') + len(dfCampanas)+1))
         carga_bq(dfCampanas,f'proyecto-mi-dw.datawarehouse.Campanas{getenv("INDUSTRIA")}')
 
         # Medios
         dfMedios = dfCampanaMedios[["Soporte","Formato"]].drop_duplicates()
+        dfMediosBQ=pd.read_gbq(f'SELECT Soporte,Formato FROM `proyecto-mi-dw.datawarehouse.Medios{getenv("INDUSTRIA")}`', project_id="proyecto-mi-dw")
+        dfMedios=pd.merge(dfMedios, dfMediosBQ, how="left", indicator=True).query('_merge=="left_only"').iloc[: , :-1]
         dfMedios.insert(0, 'IDMedio', range(contar(f'Medios{getenv("INDUSTRIA")}')+1,contar(f'Medios{getenv("INDUSTRIA")}') + len(dfMedios)+1))
         carga_bq(dfMedios,f'proyecto-mi-dw.datawarehouse.Medios{getenv("INDUSTRIA")}')
 
