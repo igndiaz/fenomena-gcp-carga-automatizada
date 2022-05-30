@@ -40,11 +40,13 @@ Para generar el proceso de carga masiva de Plan de Medios, se deben generar los 
 
     __Runtime environment variables__
 
-    En esta sección se deben crear cinco variables asociadas al entorno de ejecución, estas son:
+    En esta sección se deben crear seis variables asociadas al entorno de ejecución, estas son:
+    - __CORREO1, CORREO2 y CORREO3__: Estas direcciones están asociadas a las alertas ante un éxito o falla de la carga de leads. **Siempre se debe crear la variable CORREO1**, las demás son opcionales si queremos agregar otros correos que reciban las alertas.
     - __INDUSTRIA__: Se debe definir la industria asociada al cliente .
     - __BUCKET__: Esta variable referencia en el script el bucket generado para la industria de esta Cloud Function.
     - __ARCHIVO__: Se debe ingresar el nombre del archivo a cargar con el script.
     - __CLIENTE__: Acá se debe ingresar el nombre del cliente asociado al archivo, correspondiente al nombre en la tabla Clientes.
+    - __SENDGRID__: Acá se debe ingresar la KEY que entrega el servicio de Sendgrid para poder realizar el envío de correos.
   
 3. Creadas las componentes de GCP, se debe proceder a crear las siguientes tablas en BigQuery. 
 - PlanMediosIndustria
@@ -56,6 +58,7 @@ Para generar el proceso de carga masiva de Plan de Medios, se deben generar los 
 - CampanaIndustria
 - RegionCampanaIndustria
 - ResultadosIndustria
+- LeadsIndustria
   
 Para crear estas tablas se pueden ayudar en los DDL dentro del directorio SQL de este repositorio. La idea es que las tablas estén creadas con la nomenclatura asociada a la industria (Por ejemplo para la industria del Retail, debieramos crear tablas llamadas PlanMediosRetail y CampanaMediosRetail)
 
@@ -64,5 +67,5 @@ Para crear estas tablas se pueden ayudar en los DDL dentro del directorio SQL de
 Ya con la construcción de los componentes listo. Se deben realizar los siguientes pasos:
 
 1. Cargar el archivo de carga masiva asociado al Plan de Medios (.xlsx) al mismo bucket definido como trigger para la Cloud Function.
-
-2. Verificar en la sección de logs de la Cloud Function, que exista un status ok de la ejecución de la función.
+   
+2. Verificar en la bandeja de los correos configurados para las alertas que se reciba el correo con asunto **"Proceso de Carga de Datos PlanMediosMasivo Exitoso"**

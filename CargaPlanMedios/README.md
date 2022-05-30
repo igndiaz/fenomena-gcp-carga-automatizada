@@ -52,7 +52,7 @@ Ya con la verificación del archivo de Plan de Medios y con la construcción del
 
 2. Cargar el archivo de Plan de Medios (.xlsx) al mismo bucket donde cargamos el archivo de parametros.
 
-3. Verificar en la bandeja de los correos configurados para las alertas que se reciba el correo con asunto **"Proceso de Carga de Datos Leads Exitoso"**
+3. Verificar en la bandeja de los correos configurados para las alertas que se reciba el correo con asunto **"Proceso de Carga de Datos PlanMedios Exitoso"**
 
 ## Configuración de proceso
 ### Nueva industria

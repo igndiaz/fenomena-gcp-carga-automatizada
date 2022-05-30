@@ -10,3 +10,4 @@ pyarrow
 datetime
 pandas-gbq
 openpyxl
+sendgrid
