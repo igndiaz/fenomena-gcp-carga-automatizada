@@ -140,7 +140,7 @@ def extraer_archivo_carga(listado):
         a=i.find('Leads')
         if ( a != -1):
             break
-    return listado[a]
+    return i
 #Extraer cliente de lista
 def extraer_cliente(listado):
     a=[]
@@ -148,7 +148,7 @@ def extraer_cliente(listado):
         a=i.find('Leads')
         if ( a != -1):
             break
-    return listado[a].split()[1]
+    return i.split()[1]
 #Encontrar IDCliente
 def encontrar_idCliente(dato):
     bqclient = bigquery.Client()
